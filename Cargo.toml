@@ -17,6 +17,9 @@ clap = "2.33"
 memoffset = "0.9.0"
 hassle-rs = "0.10.0"
 simple_logger = "4.2.0"
+static_assertions = "1.1.0"
+cgmath = "0.18.0"
+tobj = "4.0.0"
 
 [profile.release]
 strip = true
