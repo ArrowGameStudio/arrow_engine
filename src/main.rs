@@ -1083,14 +1083,9 @@ fn main() {
 }
 
 fn format_performance_message(fps_counter: &FPSCounter) -> String {
-    let mut buffer = String::from("Arrow example (");
-    buffer.push_str(&format!("{}", fps_counter.current_fps()));
-    buffer.push_str(" FPS, ");
-    buffer.push_str(&format!(
-        "{:.4}",
+    String::from(&format!(
+        "Arrow example ({} FPS, {:.4} ms)",
+        fps_counter.current_fps(),
         (fps_counter.average_render_time() as f64 * 0.000001)
-    ));
-    buffer.push_str(" ms)");
-
-    buffer
+    ))
 }
