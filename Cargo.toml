@@ -6,23 +6,39 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-log = "0.4.20"
+# Rendering and windowing support
 rusty-d3d12 = { version = "0.5.2" }
+hassle-rs = "0.10.0"
+winit = "0.25"
+#raw-window-handle = "0.6.0"
+
+# ImGUI
+imgui = "0.8.0"
+imgui-winit-support = "0.8.0"
+imgui-d3d12-renderer = "0.8.5"
+
+# Model loading and processing
+tobj = "4.0.0"
+
+# Error handling and helpers
 anyhow = "1.0.75"
 thiserror = "1.0.49"
-winit = "0.28.7"
-raw-window-handle = "0.5.2"
-widestring = "1.0.2"
-clap = "2.33"
-memoffset = "0.9.0"
-hassle-rs = "0.10.0"
-simple_logger = "4.2.0"
 static_assertions = "1.1.0"
 cgmath = "0.18.0"
-tobj = "4.0.0"
+memoffset = "0.9.0"
+
+# Logging
+log = "0.4.20"
+simple_logger = "4.2.0"
+widestring = "1.0.2"
+
+clap = "2.33"
 
 [profile.release]
 strip = true
 opt-level = "s"
 lto = true
 codegen-units = 1
+
+[package.metadata.docs.rs]
+default-target = "x86_64-pc-windows-msvc"

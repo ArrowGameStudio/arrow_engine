@@ -19,10 +19,13 @@ pub static D3D12SDKVersion: u32 = 606;
 #[no_mangle]
 pub static D3D12SDKPath: &[u8; 9] = b".\\D3D12\\\0";
 
-use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
+use winit::event_loop::ControlFlow;
+//use raw_window_handle::{HasRawWindowHandle, RawWindowHandle};
 use winit::{
+    //dpi::LogicalSize,
     event::{Event, WindowEvent},
-    event_loop::{ControlFlow, EventLoop},
+    event_loop::EventLoop,
+    platform::windows::WindowExtWindows,
     window::WindowBuilder,
 };
 
@@ -1046,12 +1049,9 @@ fn main() {
         .expect("Cannot create window");
     window.set_inner_size(winit::dpi::LogicalSize::new(WINDOW_WIDTH, WINDOW_HEIGHT));
     // ToDo: command line for break_on_warn
-    let hwnd = match window.raw_window_handle() {
-        RawWindowHandle::Win32(handle) => handle.hwnd,
-        _ => unreachable!(),
-    };
-    let mut sample =
-        HelloMeshShadersSample::new(hwnd /* , command_args.is_present("breakonerr")*/);
+    let mut sample = HelloMeshShadersSample::new(
+        window.hwnd(), /* , command_args.is_present("breakonerr")*/
+    );
 
     let mut fps_counter = FPSCounter::new(std::time::Duration::from_millis(1000));
 
