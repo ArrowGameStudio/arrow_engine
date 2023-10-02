@@ -1083,9 +1083,9 @@ fn main() {
 }
 
 fn format_performance_message(fps_counter: &FPSCounter) -> String {
-    String::from(&format!(
+    format!(
         "Arrow example ({} FPS, {:.4} ms)",
         fps_counter.current_fps(),
         (fps_counter.average_render_time() as f64 * 0.000001)
-    ))
+    )
 }
