@@ -10,6 +10,9 @@ use memoffset::offset_of;
 
 use rusty_d3d12::*;
 
+mod fps_counter;
+use fps_counter::FPSCounter;
+
 #[no_mangle]
 pub static D3D12SDKVersion: u32 = 606;
 
@@ -25,8 +28,6 @@ use winit::{
 
 const WINDOW_WIDTH: u32 = 640;
 const WINDOW_HEIGHT: u32 = 480;
-//const ASPECT_RATIO: f32 = WINDOW_WIDTH as f32 / WINDOW_HEIGHT as f32;
-
 const FRAMES_IN_FLIGHT: u32 = 3;
 
 const USE_DEBUG: bool = false;
@@ -1052,6 +1053,8 @@ fn main() {
     let mut sample =
         HelloMeshShadersSample::new(hwnd /* , command_args.is_present("breakonerr")*/);
 
+    let mut fps_counter = FPSCounter::new(std::time::Duration::from_millis(1000));
+
     event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::Poll;
         match event {
@@ -1070,8 +1073,24 @@ fn main() {
                 // by the OS.
 
                 sample.draw();
+
+                fps_counter.end_frame();
+                window.set_title(format_performance_message(&fps_counter).as_str());
             }
             _ => (),
         }
     });
+}
+
+fn format_performance_message(fps_counter: &FPSCounter) -> String {
+    let mut buffer = String::from("Arrow example (");
+    buffer.push_str(&format!("{}", fps_counter.current_fps()));
+    buffer.push_str(" FPS, ");
+    buffer.push_str(&format!(
+        "{:.4}",
+        (fps_counter.average_render_time() as f64 * 0.000001)
+    ));
+    buffer.push_str(" ms)");
+
+    buffer
 }
